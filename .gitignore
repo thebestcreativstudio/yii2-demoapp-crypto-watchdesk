@@ -1,0 +1,13 @@
+/.env
+/vendor/
+/runtime/*
+!/runtime/.gitkeep
+/web/assets/*
+!/web/assets/.gitkeep
+/frontend/node_modules/
+/frontend/dist/
+/.idea/
+/.vscode/
+/.phpunit.cache/
+*.log
+.phpunit.result.cache
