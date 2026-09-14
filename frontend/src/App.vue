@@ -102,9 +102,12 @@
               <button class="secondary" @click="chartCoin = null; chartPoints = []">Закрити</button>
             </div>
             <p class="muted" v-if="chartPoints.length < 2">Мало точок — оновлюй курси з часом.</p>
-            <svg v-else class="chart" viewBox="0 0 400 140" preserveAspectRatio="none">
-              <polyline fill="none" stroke="#3d7eff" stroke-width="2" :points="chartPolyline" />
-            </svg>
+            <PriceLineChart
+              v-else
+              :key="chartCoin.coingecko_id"
+              :points="chartPoints"
+              :label="chartCoin.symbol || 'USD'"
+            />
             <div class="row muted" style="justify-content:space-between" v-if="chartPoints.length">
               <span>{{ chartPoints[0].t }}</span>
               <span>{{ fmtMoney(chartPoints[chartPoints.length - 1].price) }}</span>
@@ -183,6 +186,7 @@
 
 <script setup>
 import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
+import PriceLineChart from './PriceLineChart.vue'
 
 const user = ref(null)
 const busy = ref(false)
@@ -249,25 +253,6 @@ const convertRows = computed(() => {
         amount_to: amount * rate,
       }
     })
-})
-
-const chartPolyline = computed(() => {
-  const pts = chartPoints.value
-  if (pts.length < 2) return ''
-  const prices = pts.map((p) => p.price)
-  const min = Math.min(...prices)
-  const max = Math.max(...prices)
-  const span = max - min || 1
-  const w = 400
-  const h = 140
-  const pad = 8
-  return pts
-    .map((p, i) => {
-      const x = pad + (i / (pts.length - 1)) * (w - pad * 2)
-      const y = pad + (1 - (p.price - min) / span) * (h - pad * 2)
-      return `${x.toFixed(1)},${y.toFixed(1)}`
-    })
-    .join(' ')
 })
 
 function isTracked(id) {
