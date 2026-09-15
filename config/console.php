@@ -28,11 +28,9 @@ return [
             'charset' => 'utf8mb4',
         ],
     ],
-    'params' => [
+    'params' => array_merge(require __DIR__ . '/params.php', [
         'coingeckoBaseUrl' => (string)env('COINGECKO_BASE_URL', 'https://api.coingecko.com/api/v3'),
         'coingeckoApiKey' => (string)env('COINGECKO_API_KEY', ''),
-        'anomalyLookback' => (int)env('ANOMALY_LOOKBACK', 6),
-        'anomalyVolumeRatio' => (float)env('ANOMALY_VOLUME_RATIO', 2.0),
         'syncIntervalSeconds' => (int)env('SYNC_INTERVAL_SECONDS', 300),
-    ],
+    ]),
 ];

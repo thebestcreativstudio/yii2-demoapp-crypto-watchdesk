@@ -12,12 +12,11 @@ x-app-env: &app-env
   COINGECKO_BASE_URL: https://api.coingecko.com/api/v3
   COINGECKO_API_KEY: ${COINGECKO_API_KEY:-}
   SYNC_INTERVAL_SECONDS: "900"
-  ANOMALY_LOOKBACK: "6"
-  ANOMALY_VOLUME_RATIO: "2.0"
 
 services:
   mysql:
     image: mysql:8.0
+    restart: unless-stopped
     environment:
       MYSQL_DATABASE: crypto_watchdesk
       MYSQL_USER: watchdesk
@@ -33,6 +32,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin:5
+    restart: unless-stopped
     ports:
       - "18101:80"
     environment:
@@ -58,6 +58,7 @@ services:
 
   php:
     build: .
+    restart: unless-stopped
     working_dir: /app
     volumes:
       - ./:/app
@@ -70,6 +71,7 @@ services:
 
   nginx:
     image: nginx:1.27-alpine
+    restart: unless-stopped
     ports:
       - "18100:80"
     volumes:
