@@ -8,6 +8,7 @@ use app\models\AlertRule;
 use app\models\Notification;
 use app\models\User;
 use app\models\WatchlistItem;
+use app\services\CentrifugoToken;
 use app\services\CoinConverter;
 use app\services\CoinGeckoClient;
 use app\services\DashboardBuilder;
@@ -312,6 +313,15 @@ final class ApiController extends Controller
             ->asArray()
             ->all();
         return ['ok' => true, 'notifications' => $rows];
+    }
+
+    public function actionRealtimeToken(): array
+    {
+        $user = $this->userOrNull();
+        if ($user === null) {
+            return ['ok' => false, 'error' => 'unauthorized'];
+        }
+        return ['ok' => true, ...(new CentrifugoToken())->forUser($user)];
     }
 
     private function userOrNull(): ?User

@@ -11,6 +11,11 @@ export default defineConfig({
         target: 'http://127.0.0.1:18100',
         changeOrigin: true,
       },
+      '/connection': {
+        target: 'http://127.0.0.1:18100',
+        changeOrigin: true,
+        ws: true,
+      },
     },
   },
 })

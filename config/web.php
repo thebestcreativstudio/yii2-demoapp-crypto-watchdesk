@@ -60,6 +60,7 @@ return [
                 'DELETE api/alerts/<id:\\d+>' => 'api/alerts-remove',
 
                 'GET api/notifications' => 'api/notifications',
+                'GET api/realtime/token' => 'api/realtime-token',
             ],
         ],
         'log' => [
@@ -78,5 +79,10 @@ return [
         'coingeckoApiKey' => (string)env('COINGECKO_API_KEY', ''),
         'frontendUrl' => (string)env('FRONTEND_URL', 'http://localhost:18100'),
         'syncIntervalSeconds' => (int)env('SYNC_INTERVAL_SECONDS', 300),
+        'redisHost' => (string)env('REDIS_HOST', '127.0.0.1'),
+        'redisPort' => (int)env('REDIS_PORT', 6379),
+        'redisStream' => (string)env('REDIS_STREAM', 'desk:sync'),
+        'centrifugoHmacSecret' => (string)env('CENTRIFUGO_HMAC_SECRET', 'crypto-watchdesk-centrifugo-hmac'),
+        'centrifugoChannel' => (string)env('CENTRIFUGO_CHANNEL', 'desk'),
     ]),
 ];

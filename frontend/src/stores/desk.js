@@ -1,5 +1,13 @@
 import { defineStore } from 'pinia'
+import { Centrifuge } from 'centrifuge'
 import { api } from '../api.js'
+
+let centrifuge = null
+
+function realtimeWsUrl() {
+  const proto = location.protocol === 'https:' ? 'wss:' : 'ws:'
+  return `${proto}//${location.host}/connection/websocket`
+}
 
 export const useDeskStore = defineStore('desk', {
   state: () => ({
@@ -40,6 +48,7 @@ export const useDeskStore = defineStore('desk', {
     },
 
     async logout() {
+      this.disconnectRealtime()
       await api('/api/auth/logout', { method: 'POST' })
       this.user = null
     },
@@ -54,6 +63,7 @@ export const useDeskStore = defineStore('desk', {
       const me = await api('/api/me')
       if (!me.ok) {
         this.user = null
+        this.disconnectRealtime()
         return
       }
       this.user = me.user
@@ -72,6 +82,7 @@ export const useDeskStore = defineStore('desk', {
       if (a.ok) this.alerts = a.rules
       const n = await api('/api/notifications')
       if (n.ok) this.notifications = n.notifications
+      this.connectRealtime()
     },
 
     async sync() {
@@ -167,6 +178,41 @@ export const useDeskStore = defineStore('desk', {
     async removeAlert(id) {
       await api('/api/alerts/' + id, { method: 'DELETE' })
       await this.refresh()
+    },
+
+    async connectRealtime() {
+      if (!this.user || centrifuge) return
+      try {
+        const boot = await api('/api/realtime/token')
+        if (!boot.ok || !boot.token || !boot.channel) return
+        const client = new Centrifuge(realtimeWsUrl(), {
+          token: boot.token,
+          getToken: async () => {
+            const data = await api('/api/realtime/token')
+            if (!data.ok || !data.token) throw new Error(data.error || 'No realtime token')
+            return data.token
+          },
+        })
+        client.newSubscription(boot.channel).on('publication', (ctx) => {
+          this.onRealtimePush(ctx.data)
+        }).subscribe()
+        client.connect()
+        centrifuge = client
+      } catch (e) {
+        centrifuge = null
+      }
+    },
+
+    disconnectRealtime() {
+      centrifuge?.disconnect()
+      centrifuge = null
+    },
+
+    async onRealtimePush(data) {
+      if (data?.type !== 'synced' || this.busy) return
+      this.message = `Курси оновлено (${data.snapshots} snapshots, ${data.captured_at})`
+      await this.refresh()
+      if (this.chartCoin) await this.showChart(this.chartCoin)
     },
   },
 })

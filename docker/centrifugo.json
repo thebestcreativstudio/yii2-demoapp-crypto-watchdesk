@@ -1,0 +1,40 @@
+{
+  "client": {
+    "token": {
+      "hmac_secret_key": "crypto-watchdesk-centrifugo-hmac"
+    },
+    "allowed_origins": [
+      "http://localhost:18100",
+      "http://127.0.0.1:18100",
+      "http://localhost:5173",
+      "http://127.0.0.1:5173"
+    ]
+  },
+  "http_api": {
+    "key": "crypto-watchdesk-centrifugo-api"
+  },
+  "engine": {
+    "type": "redis",
+    "redis": {
+      "address": "redis://redis:6379"
+    }
+  },
+  "channel": {
+    "without_namespace": {
+      "allow_subscribe_for_client": true
+    }
+  },
+  "consumers": [
+    {
+      "enabled": true,
+      "name": "desk_sync",
+      "type": "redis_stream",
+      "redis_stream": {
+        "address": "redis://redis:6379",
+        "streams": ["desk:sync"],
+        "consumer_group": "centrifugo",
+        "num_workers": 1
+      }
+    }
+  ]
+}

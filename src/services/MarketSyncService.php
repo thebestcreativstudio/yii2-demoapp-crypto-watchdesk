@@ -71,11 +71,15 @@ final class MarketSyncService
 
         $fired = $this->alerts->evaluateAfterSync($markets);
 
-        return [
+        $result = [
             'coins' => count($ids),
             'snapshots' => $written,
             'alerts_fired' => $fired,
             'captured_at' => $now,
         ];
+        if ($written > 0) {
+            (new RealtimePublisher())->publishSynced($result);
+        }
+        return $result;
     }
 }

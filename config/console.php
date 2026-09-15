@@ -32,5 +32,9 @@ return [
         'coingeckoBaseUrl' => (string)env('COINGECKO_BASE_URL', 'https://api.coingecko.com/api/v3'),
         'coingeckoApiKey' => (string)env('COINGECKO_API_KEY', ''),
         'syncIntervalSeconds' => (int)env('SYNC_INTERVAL_SECONDS', 300),
+        'redisHost' => (string)env('REDIS_HOST', '127.0.0.1'),
+        'redisPort' => (int)env('REDIS_PORT', 6379),
+        'redisStream' => (string)env('REDIS_STREAM', 'desk:sync'),
+        'centrifugoChannel' => (string)env('CENTRIFUGO_CHANNEL', 'desk'),
     ]),
 ];
