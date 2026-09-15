@@ -19,7 +19,8 @@ cd frontend && npm install && npm run build && cd ..
 
 | URL | Що |
 |-----|-----|
-| http://localhost:18100 | UI |
+| http://localhost:18100 | UI (збірка `frontend/dist`) |
+| http://localhost:5173 | Vue HMR (`cd frontend && npm run dev`, Docker має бути запущений) |
 | http://localhost:18101 | phpMyAdmin (`watchdesk` / `secret`) |
 | http://localhost:18100/api/health | API |
 

@@ -35,6 +35,8 @@ final class ApiController extends Controller
                     Yii::$app->params['frontendUrl'],
                     'http://localhost:18100',
                     'http://127.0.0.1:18100',
+                    'http://localhost:5173',
+                    'http://127.0.0.1:5173',
                 ],
                 'Access-Control-Request-Method' => ['GET', 'POST', 'DELETE', 'OPTIONS'],
                 'Access-Control-Allow-Credentials' => true,
