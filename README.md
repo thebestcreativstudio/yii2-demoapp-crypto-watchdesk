@@ -1,5 +1,7 @@
 # crypto-watchdesk
 
+[![CI](https://github.com/thebestcreativstudio/crypto-watchdesk/actions/workflows/ci.yml/badge.svg)](https://github.com/thebestcreativstudio/crypto-watchdesk/actions/workflows/ci.yml)
+
 Понятный portfolio-демо: **крипто-кабінет** на **Yii2 + Vue + Docker**.
 
 **CoinGecko** → snapshots у MySQL → дельти / unusual volume / **converter** / alerts.  
