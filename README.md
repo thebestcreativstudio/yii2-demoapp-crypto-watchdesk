@@ -2,13 +2,15 @@
 
 [![CI](https://github.com/thebestcreativstudio/crypto-watchdesk/actions/workflows/ci.yml/badge.svg)](https://github.com/thebestcreativstudio/crypto-watchdesk/actions/workflows/ci.yml)
 
-Понятный portfolio-демо: **крипто-кабінет** на **Yii2 + Vue + Docker**.
+Демо крипто-кабинета для портфолио: API на **Yii2**, интерфейс на **Vue**, всё поднимается **Docker Compose**.
 
-**CoinGecko** → snapshots у MySQL → дельти / unusual volume / **converter** / alerts.  
+Кабинет берёт курсы с **CoinGecko**, кладёт снимки в **MySQL** и уже по своей базе считает дельты, необычный объём, конвертер и алерты. Логин обычный (`demo` / `demo1234`), Google OAuth нет.
 
-Пуш у браузер: **Redis Stream** → **Centrifugo** → WebSocket.
+Когда воркер обновил цены, событие уходит в **Redis Stream**, **Centrifugo** пушит в браузер по **WebSocket**. Отдельный Node для сокетов не нужен.
 
-Без Google OAuth.
+![Crypto Watchdesk](docs/cabinet.png)
+
+![Watchlist, график и конвертер](docs/cabinet-chart.png)
 
 ---
 
