@@ -71,3 +71,5 @@ Worker за замовчуванням sync раз на **15 хв**.
 ## License
 
 MIT
+
+Розробка веб додаткiв [https://botservice.biz/](https://botservice.biz/)
