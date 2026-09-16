@@ -2,15 +2,15 @@
 
 [![CI](https://github.com/thebestcreativstudio/crypto-watchdesk/actions/workflows/ci.yml/badge.svg)](https://github.com/thebestcreativstudio/crypto-watchdesk/actions/workflows/ci.yml)
 
-Демо крипто-кабинета для портфолио: API на **Yii2**, интерфейс на **Vue**, всё поднимается **Docker Compose**.
+Демо крипто-кабінету для портфоліо: API на **Yii2**, інтерфейс на **Vue**, усе піднімається **Docker Compose**.
 
-Кабинет берёт курсы с **CoinGecko**, кладёт снимки в **MySQL** и уже по своей базе считает дельты, необычный объём, конвертер и алерты. Логин обычный (`demo` / `demo1234`), Google OAuth нет.
+Кабінет бере курси з **CoinGecko**, кладе знімки в **MySQL** і вже по своїй базі рахує дельти, незвичний обсяг, конвертер і алерти. Логін звичайний (`demo` / `demo1234`), Google OAuth немає.
 
-Когда воркер обновил цены, событие уходит в **Redis Stream**, **Centrifugo** пушит в браузер по **WebSocket**. Отдельный Node для сокетов не нужен.
+Коли воркер оновив ціни, подія йде в **Redis Stream**, **Centrifugo** пушить у браузер по **WebSocket**. Окремий Node для сокетів не потрібен.
 
 ![Crypto Watchdesk](docs/cabinet.png)
 
-![Watchlist, график и конвертер](docs/cabinet-chart.png)
+![Watchlist, графік і конвертер](docs/cabinet-chart.png)
 
 ---
 
